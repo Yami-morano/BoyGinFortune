@@ -1,0 +1,76 @@
+﻿@model BoyGin.Models.VMCliente
+@{
+    ViewBag.Title = "RegistroCliente";
+}
+
+<h2>Complete los siguientes datos:</h2>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="form-group">
+                <label>Nombre</label>
+
+                @Html.TextBoxFor(x => x.clienteModel.nombreCliente, htmlAttributes: new { @class = "form-control", @id = "nombre" })
+                @Html.ValidationMessageFor(model => model.clienteModel.nombreCliente, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label>Apellido</label>
+
+                @Html.TextBoxFor(x => x.clienteModel.apellidoCliente, htmlAttributes: new { @class = "form-control", @id = "apellido" })
+                @Html.ValidationMessageFor(model => model.clienteModel.apellidoCliente, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label>DNI</label>
+
+                @Html.TextBoxFor(x => x.clienteModel.DNI, htmlAttributes: new { @class = "form-control", @id = "DNI" })
+                @Html.ValidationMessageFor(model => model.clienteModel.DNI, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label>Domicilio</label>
+
+                @Html.TextBoxFor(x => x.clienteModel.domicilio, htmlAttributes: new { @class = "form-control", @id = "domicilio" })
+                @Html.ValidationMessageFor(model => model.clienteModel.domicilio, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label>Número</label>
+
+                @Html.TextBoxFor(x => x.clienteModel.numeroDomicilio, htmlAttributes: new { @class = "form-control", @id = "domicilio" })
+                @Html.ValidationMessageFor(model => model.clienteModel.numeroDomicilio, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label>Localidad</label>
+
+                @Html.TextBoxFor(x => x.clienteModel.localidad, htmlAttributes: new { @class = "form-control", @id = "localidad" })
+                @Html.ValidationMessageFor(model => model.clienteModel.localidad, "", new { @class = "text-danger" })
+            </div>
+
+            <label>Provincia</label>
+            @Html.DropDownListFor(x => x.clienteModel.idProvincia, new SelectList(Model.provinciaModel, "idProvincia", "nombreProvincia"), "Seleccione la provincia", htmlAttributes: new { @class = "form-control", @id = "provincia" })
+            @Html.ValidationMessageFor(model => model.clienteModel.idProvincia, "", new { @class = "text-danger" })
+        </div>
+
+            <div class="form-group">
+                <label>Teléfono</label>
+
+                @Html.TextBoxFor(x => x.clienteModel.telefono, htmlAttributes: new { @class = "form-control", @id = "telefono" })
+                @Html.ValidationMessageFor(model => model.clienteModel.nombreCliente, "", new { @class = "text-danger" })
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Aceptar" class="btn btn-primary" />
+            </div>
+
+        }
+    </div>
+    <div class="col-md-2"></div>
+</div>

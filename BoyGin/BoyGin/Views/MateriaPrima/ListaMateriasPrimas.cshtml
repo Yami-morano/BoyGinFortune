@@ -1,0 +1,36 @@
+﻿@model List<BoyGin.Models.MateriaPrima>
+@{
+    ViewBag.Title = "ListaMateriasPrimas";
+}
+
+
+<h2>Listado de materias primas</h2>
+
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+
+        <th>Descripcion</th>
+        <th>Acciones</th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+
+            <td>@item.descripcionMateriaPrima</td>
+
+            <td>
+                
+                <a href="@Url.Action("EditarMateriaPrima", "MateriaPrima", new { @IdMateriaPrima = item.idMateriaPrima})" class="btn btn-primary">Editar</a>
+                <a href="@Url.Action("EliminarMateriaPrima", "MateriaPrima", new { @IdMateriaPrima= item.idMateriaPrima})" class="btn btn-primary">Eliminar</a>
+            </td>
+
+
+        </tr>
+
+    }
+</table>
+

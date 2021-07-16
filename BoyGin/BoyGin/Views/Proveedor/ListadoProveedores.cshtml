@@ -1,0 +1,44 @@
+﻿@model List <BoyGin.Models.DTOProveedor>
+@{
+    ViewBag.Title = "ListadoProveedores";
+}
+
+<h2>Listado de Proveedores</h2>
+
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+        <th>Nombre / Razón social</th>
+        <th>Apellido / Tipo sociedad</th>
+        <th>Dirección</th>
+        <th>Número</th>
+        <th>Localidad</th>
+        <th>Provincia</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+<tr>
+    <td>@item.nombre_razonSocial</td>
+    <td>@item.apellido_TipoSoc</td>
+    <td>@item.direccion</td>
+    <td>@item.numeroDireccion</td>
+    <td>@item.localidad</td>
+    <td>@item.nombreProvincia</td>
+    <td>@item.email</td>
+    <td>@item.telefono</td>
+
+    <td>
+        <a href="@Url.Action("EditarProveedor", "Proveedor", new { @idProveedor = item.idProveedor})" class="btn btn-primary">Editar</a>
+        <a href="@Url.Action("EliminarProveedor", "Proveedor", new { @idProveedor = item.idProveedor})" class="btn btn-primary">eliminar</a>
+    </td>
+
+
+</tr>
+    }
+
+</table>

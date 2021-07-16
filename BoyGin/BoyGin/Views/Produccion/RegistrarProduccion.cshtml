@@ -1,0 +1,206 @@
+﻿@model BoyGin.Models.VMProduccion
+
+@{
+    ViewBag.Title = "RegistrarProduccion";
+}
+
+<h2>Registro de la Producción</h2>
+
+
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+
+
+        @using (Html.BeginForm(@*"RegistrarProduccion", "Produccion", FormMethod.Post*@))
+{
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="form-group">
+                <label>Fecha</label>
+                <label>@(DateTime.UtcNow.ToString("dd-MM-yyyy"))</label>
+            </div>
+
+            <label>Producto</label>
+            @Html.DropDownListFor(x => x.produccionmodel.idProducto, new SelectList(Model.productoModel, "idProducto", "nombreProducto"), "Seleccione el producto", htmlAttributes: new { @class = "form-control", @id = "producto" })
+            @Html.ValidationMessageFor(model => model.produccionmodel.idProducto, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label>Cantidad producida</label>
+
+            @Html.TextBoxFor(x => x.historialProduModel.cantidadProducida, htmlAttributes: new { @class = "form-control", @id = "cantidad" })
+            @Html.ValidationMessageFor(model => model.historialProduModel.cantidadProducida, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label>Materia Prima</label>
+            @Html.DropDownListFor(x => x.produccionmodel.idMateriasPrimas, new SelectList(Model.materiaPrimaModel, "idMateriaPrima", "descripcionMateriaPrima"), "Seleccione la materia prima", htmlAttributes: new { @class = "form-control", @id = "descripcionMateriaPrima" })
+            @Html.ValidationMessageFor(model => model.produccionmodel.idMateriasPrimas, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label>Cantidad de materia prima usada</label>
+
+            @Html.TextBoxFor(x => x.produccionmodel.cantidadMateriaPrimaUsada, htmlAttributes: new { @class = "form-control", @id = "cantidadMateriaPrimaUsada" })
+            @Html.ValidationMessageFor(model => model.produccionmodel.cantidadMateriaPrimaUsada, "", new { @class = "text-danger" })
+        </div>
+
+<div class="form-group">
+    <imput type="button" value="agregar" class="btn btn-success" onclick="agregarConcepto();" return false;>Agregar</imput>
+</div>
+
+
+
+<div id="divConceptos">
+    <table class="table table-bordered table-striped table-hover" id="tablaConceptos">
+        <tr>
+            <th>Id</th>
+            <th>Descripcion</th>
+            <th>Cantidad</th>
+            <th>Accion</th>
+        </tr>
+
+    </table>
+
+</div>
+<div class="form-group">
+    <input type="submit" value="Aceptar" class="btn btn-primary" />
+
+</div>
+
+}
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<script>
+    var num = 0;
+    function agregarConcepto() {
+
+        
+        let materiaPrima = document.getElementById("descripcionMateriaPrima");
+        let nombreMateriPrima = materiaPrima.options[materiaPrima.selectedIndex].text
+        let materiaPrimaId = materiaPrima.value;
+        //let descripcionMateriaPrima = document.getElementById("descripcionMateriaPrima").value;
+
+        let cantidadMateriaPrimaUsada = document.getElementById("cantidadMateriaPrimaUsada").value;
+
+
+        $.ajax(
+                {
+                url: "@Url.Action("stockController", "Produccion")", //genera la url dle controlador
+                data: { id: materiaPrimaId, cantidad: cantidadMateriaPrimaUsada }, // le paso los parametros que son los que recibe el controlador
+                    type: "get", // porque el metodo Json es post
+                    success: function (response) {
+                        if (response.result == true) {
+                            alert('NO SE DISPONE DE ESA CANTIDAD, ACTUALMENTE HAY: ' + response.cant)
+                        }
+                        else {
+                           //agregamos tabla
+                            let Tabla = document.getElementById("tablaConceptos");
+                            let TR = document.createElement("tr");
+
+                            //
+                            TR.setAttribute("id", materiaPrimaId)
+                            //
+
+                            let TDidMateriaPrima = document.createElement("td");
+                            let TDnombreMateriaPrima = document.createElement("td");
+
+                            let TDcantidadMateriaPrimaUsada = document.createElement("td");
+
+                            //
+                            let inputBorrar = document.createElement("INPUT");
+                            inputBorrar.setAttribute("type", "button");
+                            inputBorrar.setAttribute("class", "borrar");
+                            inputBorrar.setAttribute("value", "Eliminar");
+                            inputBorrar.setAttribute("onclick", "quitar(" + materiaPrimaId + ")");
+                            let TDborrar = document.createElement("td");
+                            TDborrar.appendChild(inputBorrar)
+                            //
+
+                            TR.appendChild(TDidMateriaPrima)
+                            TR.appendChild(TDnombreMateriaPrima);
+                            TR.appendChild(TDcantidadMateriaPrimaUsada);
+
+                            //
+                            TR.appendChild(TDborrar);
+                            //
+
+                            TDidMateriaPrima.innerHTML = materiaPrimaId
+                            TDnombreMateriaPrima.innerHTML = nombreMateriPrima;
+                            TDcantidadMateriaPrimaUsada.innerHTML = cantidadMateriaPrimaUsada;
+
+                            Tabla.appendChild(TR);
+
+
+                            //agrega hiddens
+                            let DivConceptos = document.getElementById("divConceptos");
+                            let HiddenIndex = document.createElement("input");
+                            let HiddenNombreMateriaPrima = document.createElement("input");
+                            let HiddenCantidadMateriaPrimaUsada = document.createElement("input");
+
+                            let HiddenIdMateriaPrima = document.createElement("input")
+
+
+                            HiddenIndex.name = "conceptos.Index";
+                            HiddenIndex.value = num;
+                            HiddenIndex.type = "hidden";
+                            HiddenIndex.className = "materia-" + materiaPrimaId;
+
+                            HiddenIdMateriaPrima.name = "conceptos[" + num + "].materiaPrimaId";
+                            HiddenIdMateriaPrima.value = materiaPrimaId;
+                            HiddenIdMateriaPrima.type = "hidden";
+                           HiddenIdMateriaPrima.className = "materia-" + materiaPrimaId;
+
+                            HiddenNombreMateriaPrima.name = "conceptos[" + num + "].nombreMateriPrima";
+                            HiddenNombreMateriaPrima.value = nombreMateriPrima;
+                            HiddenNombreMateriaPrima.type = "hidden";
+                             HiddenNombreMateriaPrima.className = "materia-" + materiaPrimaId;
+
+
+                            HiddenCantidadMateriaPrimaUsada.name = "conceptos[" + num + "].cantidadMateriaPrimaUsada";
+                            HiddenCantidadMateriaPrimaUsada.value = cantidadMateriaPrimaUsada;
+                            HiddenCantidadMateriaPrimaUsada.type = "hidden";
+                            HiddenCantidadMateriaPrimaUsada.className = "materia-" + materiaPrimaId;
+
+                            DivConceptos.appendChild(HiddenIndex);
+                            DivConceptos.appendChild(HiddenIdMateriaPrima);
+                            DivConceptos.appendChild(HiddenNombreMateriaPrima);
+                            DivConceptos.appendChild(HiddenCantidadMateriaPrimaUsada);
+
+                            num++;
+                        }
+                        
+                    },
+                    error:function(err,error)
+                    {
+                        alert(err);
+                    }
+                }
+                );
+        
+    }
+    function quitar(idFila) {
+        var trElement = document.getElementById(idFila);
+        if (trElement != null) {
+            trElement.remove();
+        } 
+
+        var hiddenElements = document.getElementsByClassName("materia-" + idFila);
+        console.log("---->", hiddenElements)
+       
+  
+          var i;
+          for (i = 0; i < hiddenElements.length; i++) {
+            hiddenElements[i].remove();
+          }
+     
+        }
+
+
+
+</script>

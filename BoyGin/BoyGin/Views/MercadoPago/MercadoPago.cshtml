@@ -1,0 +1,43 @@
+﻿@model BoyGin.Models.MercadoPago
+@{
+    /**/
+
+    ViewBag.Title = "MercadoPago";
+}
+
+@*<h2>Mercado Pago</h2>*@
+
+
+<!doctype html>
+<html>
+<head>
+    <title>Pagar</title>
+</head>
+<body>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+    <script>
+        // Agrega credenciales de SDK
+        const mp = new MercadoPago('TEST-c069d4cc-089b-4bdd-99e5-d6a714344267', {
+            locale: 'es-AR'
+        });
+
+        const checkout = mp.checkout({
+            preference: {
+                id: '@ViewData["IdPreferencia"]'
+            },
+            autoOpen: true, 
+
+        });
+
+
+
+    </script>
+
+    @*<input type="button" value="Pagar" class="btn btn-primary" onclick="checkout.open()">*@
+
+</body>
+</html>
+
+
+

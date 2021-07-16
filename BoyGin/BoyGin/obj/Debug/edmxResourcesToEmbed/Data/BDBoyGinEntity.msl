@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BoyGinFortuneModelStoreContainer" CdmEntityContainer="BoyGinFortuneEntities">
+    <EntitySetMapping Name="Clientes">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.Clientes">
+        <MappingFragment StoreEntitySet="Clientes">
+          <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
+          <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+          <ScalarProperty Name="IdProvincia" ColumnName="IdProvincia" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ComprasMateriaPrima">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.ComprasMateriaPrima">
+        <MappingFragment StoreEntitySet="ComprasMateriaPrima">
+          <ScalarProperty Name="IdCompraMateriaPrima" ColumnName="IdCompraMateriaPrima" />
+          <ScalarProperty Name="IdMateriaPrima" ColumnName="IdMateriaPrima" />
+          <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+          <ScalarProperty Name="FechaCompra" ColumnName="FechaCompra" />
+          <ScalarProperty Name="CantidadComprada" ColumnName="CantidadComprada" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetallesFactura">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.DetallesFactura">
+        <MappingFragment StoreEntitySet="DetallesFactura">
+          <ScalarProperty Name="IdDetalleFactura" ColumnName="IdDetalleFactura" />
+          <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
+          <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+          <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Facturas">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.Facturas">
+        <MappingFragment StoreEntitySet="Facturas">
+          <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
+          <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+          <ScalarProperty Name="FechaFactura" ColumnName="FechaFactura" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HistorialProduccion">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.HistorialProduccion">
+        <MappingFragment StoreEntitySet="HistorialProduccion">
+          <ScalarProperty Name="IdProduccion" ColumnName="IdProduccion" />
+          <ScalarProperty Name="FechaProduccion" ColumnName="FechaProduccion" />
+          <ScalarProperty Name="CantidadProducida" ColumnName="CantidadProducida" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MateriasPrimas">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.MateriasPrimas">
+        <MappingFragment StoreEntitySet="MateriasPrimas">
+          <ScalarProperty Name="IdMateriaPrima" ColumnName="IdMateriaPrima" />
+          <ScalarProperty Name="DescripcionMateriaPrima" ColumnName="DescripcionMateriaPrima" />
+          <ScalarProperty Name="StockMateriaPrima" ColumnName="StockMateriaPrima" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Produccion_MateriasPrimas">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.Produccion_MateriasPrimas">
+        <MappingFragment StoreEntitySet="Produccion_MateriasPrimas">
+          <ScalarProperty Name="IdProdu_MatPrima" ColumnName="IdProdu_MatPrima" />
+          <ScalarProperty Name="IdProduccion" ColumnName="IdProduccion" />
+          <ScalarProperty Name="IdMateriasPrimas" ColumnName="IdMateriasPrimas" />
+          <ScalarProperty Name="CantidadMateriaUsada" ColumnName="CantidadMateriaUsada" />
+          <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Productos">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.Productos">
+        <MappingFragment StoreEntitySet="Productos">
+          <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+          <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IdTipoProducto" ColumnName="IdTipoProducto" />
+          <ScalarProperty Name="PrecioProducto" ColumnName="PrecioProducto" />
+          <ScalarProperty Name="StockProducto" ColumnName="StockProducto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Proveedores">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.Proveedores">
+        <MappingFragment StoreEntitySet="Proveedores">
+          <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+          <ScalarProperty Name="Nombre_razonSocial" ColumnName="Nombre_razonSocial" />
+          <ScalarProperty Name="Apellido_TipoSoc" ColumnName="Apellido_TipoSoc" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+          <ScalarProperty Name="IdProvincia" ColumnName="IdProvincia" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Provincias">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.Provincias">
+        <MappingFragment StoreEntitySet="Provincias">
+          <ScalarProperty Name="IdProvincia" ColumnName="IdProvincia" />
+          <ScalarProperty Name="NombreProvincia" ColumnName="NombreProvincia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+          <ScalarProperty Name="DescripcionRol" ColumnName="DescripcionRol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TiposProducto">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.TiposProducto">
+        <MappingFragment StoreEntitySet="TiposProducto">
+          <ScalarProperty Name="IdTipoProducto" ColumnName="IdTipoProducto" />
+          <ScalarProperty Name="NombreTipo" ColumnName="NombreTipo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="BoyGinFortuneModel.Usuarios">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+          <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+          <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

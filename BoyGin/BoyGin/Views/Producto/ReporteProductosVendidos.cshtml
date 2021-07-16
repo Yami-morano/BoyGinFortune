@@ -1,0 +1,82 @@
+﻿@model List<BoyGin.Models.ReporteProducto>
+@{
+    ViewBag.Title = "ReporteProductosVendidos";
+    var cantidad = ViewBag.CantidadTotal;
+}
+
+<h2>Histórico de ventas de productos</h2>
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+
+
+@{
+
+}
+<div>
+    <h4>Cantidad total de productos vendidos al @DateTime.Now: <b>@cantidad</b> </h4> 
+        
+  
+</div>
+<figure class="highcharts-figure">
+    <div id="container"></div>
+
+</figure>
+@section Scripts{
+    <script>
+        $.ajax(
+            {
+                url: "@Url.Action("grafico", "Producto")", //genera la url dle controlador
+                data: {}, // le paso los parametros que son los que recibe el controlador
+                type: "get", // porque el metodo Json es post
+                success: function (response) {
+                    console.log(response)
+                    Highcharts.chart('container', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Cantidad total histórica vendida de cada productos'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: {point.y} (<b>{point.percentage:.1f}%</b>)'
+                        },
+                        accessibility: {
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Vendidos',
+                            colorByPoint: true,
+                            data: response.result
+                        }]
+                    })
+                },
+                error: function (err, error) {
+                    console.log(error)
+                    alert(error);
+                }
+
+            })
+
+    </script>}
+

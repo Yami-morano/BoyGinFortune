@@ -1,0 +1,38 @@
+﻿@model List<BoyGin.Models.DTOProducto>
+@{
+    ViewBag.Title = "Listado";
+}
+
+
+<h2>Listado de Productos</h2>
+
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Tipo de producto</th>
+        <th>Acciones</th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>@item.nombreProducto</td>
+            <td>@item.descripcion</td>
+            <td>@item.precioProducto</td>
+            <td>@item.stockProducto</td>
+            <td>@item.nombreTipo</td>
+            <td>
+                <a href="@Url.Action("Editar", "Producto", new { @idProducto = item.idProducto})" class="btn btn-primary">Editar</a>
+                <a href="@Url.Action("Eliminar", "Producto", new { @idProducto = item.idProducto})" class="btn btn-primary">eliminar</a>
+            </td>
+
+
+        </tr>
+    }
+
+</table>

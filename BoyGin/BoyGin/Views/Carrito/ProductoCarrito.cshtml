@@ -1,0 +1,105 @@
+﻿@model List<BoyGin.Models.DTOProducto>
+@{
+                /**/
+
+                /**/
+
+                ViewBag.Title = "Productos";
+}
+
+
+
+<h2>Productos</h2>
+@if (Model != null)
+{
+    <table class="table table-condensed tbl_product">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre del Producto</th>
+                <th>Descripcion</th>
+                <th>Stock</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.idProducto</td>
+                <td> @item.nombreProducto</td>
+                <td> @item.descripcion</td>
+                <td>@item.stockProducto</td>
+                <td>@String.Format("{0:C2}", item.precioProducto)</td>
+                 
+                <td><input type="number" class="form-control numbers" min="0" /></td>
+                <td class="text-center">
+                    @if (item.stockProducto> 0)
+                    {
+                        <a href="#" class="agregar btn btn-success">Agregar</a>
+                    }
+
+
+                </td>
+                @*<td>@Html.ActionLink("Agregar", "AgregaCarrito", "Carrito", new { Id = item.idProducto }, null) </td>*@
+            </tr>
+            }
+        </tbody>
+
+    </table>
+  
+}
+    
+
+@section Scripts
+{
+    <script>
+    $(function () {
+        $(".agregar").on("click", function (event) {
+            event.preventDefault(); // para que al seleccionar un link, no cambie el foco donde estaba
+            //var idProducto = $("#id").text();
+            //var cantidad = $("#cantidad").val();
+
+            var idProducto = $(this).parent().parent().find("td:eq(0)").text();
+            var cantidad = $(this).parent().parent().find("input").val(); //busca el imput para extraer la cantidad
+
+            $.ajax(
+                {
+                    url: "@Url.Action("AgregaCarrito", "Carrito")", //genera la url dle controlador
+                    data:  { id: idProducto, cantidad: cantidad }, // le paso los parametros que son los que recibe el controlador
+                    type: "post", // porque el metodo Json es post
+                    success: function (response) {
+                        if (response.result == true) {
+                            window.location.href = "@Url.Action("AgregaCarrito", "Carrito")"; // redirecciona a la vista carrito
+                        }
+                        else {
+                            window.location.href = "@Url.Action("ProductoCarrito", "ProductoCarrito")"
+                            alert("La cantidad que usted deseo cargar excede los limites")
+                        }
+                        
+                    },
+                    error:function(err,error)
+                    {
+                        alert(error);
+                    }
+                }
+                );
+        });
+        $(".numbers").keydown(function (e) {
+
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 40]) !== -1 ||
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                    return;
+                }
+
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+    });
+    </script>
+}
+

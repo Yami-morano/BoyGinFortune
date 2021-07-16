@@ -1,0 +1,48 @@
+﻿@model List<BoyGin.Models.DTODetalleFactura>
+@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "Detalles";
+}
+
+<h2>COMPROBANTE NO VALIDO COMO FACTURA</h2>
+
+
+
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Nombre del cliente</th>
+            <th>Fecha de factura</th>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+
+                <td>@item.nombreCliente</td>
+                <td>@item.fechaFactura</td>
+                <td>@item.nombreProducto</td>
+                <td>@item.precioUnitario</td>
+                <td>@item.cantidad</td>
+                <td>@item.Subtotal</td>
+
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+<div>
+    <a href="@Url.Action("ListadoFacturacion", "Factura")" class="btn btn-primary">Listado de ventas</a>
+    <a href="@Url.Action("FacturacionPorFecha", "Factura")" class="btn btn-primary">Facturacion por fecha</a>
+</div>

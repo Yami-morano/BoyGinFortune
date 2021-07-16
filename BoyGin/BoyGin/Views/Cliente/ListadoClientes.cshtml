@@ -1,0 +1,45 @@
+﻿@model List<BoyGin.Models.DTOCliente>
+
+@{
+    ViewBag.Title = "ListadoClientes";
+}
+
+<h2>Clientes</h2>
+
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+
+        <th>Nombre Completo</th>
+        <th>DNI</th>
+        <th>Domicilio</th>
+        <th>Número</th>
+        <th>Localidad</th>
+        <th>Provincia</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+<tr>
+
+    <td>@item.nombreCliente</td>
+    <td>@item.DNI</td>
+    <td>@item.domicilio</td>
+    <td>@item.numeroDomicilio</td>
+    <td>@item.localidad</td>
+    <td>@item.nombreProvincia</td>
+    <td>@item.telefono</td>
+    <td>@item.email</td>
+
+    <td>
+        <a href="@Url.Action("EditarCliente", "Cliente", new { @idCliente = item.idCliente})" class="btn btn-primary">Editar</a>
+        <a href="@Url.Action("EliminarCliente", "Cliente", new { @idCliente = item.idCliente})" class="btn btn-primary">eliminar</a>
+    </td>
+
+</tr>
+    }
+
+</table>

@@ -1,0 +1,93 @@
+﻿@model List<BoyGin.Models.ReporteFacturacion>
+@{
+    ViewBag.Title = "ReporteBarras";
+
+   // var facturacionRecipiente = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
+
+}
+
+<h2>Reporte Facturación</h2>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+
+</figure>
+
+
+@section scripts{
+    @*<script src="https://code.highcharts.com/highcharts.js"></script>*@
+    <script>
+
+        $.ajax(
+                {
+                    url: "@Url.Action("prueba", "Factura")", //genera la url dle controlador
+                    data:  { }, // le paso los parametros que son los que recibe el controlador
+                    type: "get", // porque el metodo Json es post
+                success: function (response) {
+                    console.log(response)
+                        Highcharts.chart('container', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Facturación mensual por año'
+                        },
+                        subtitle: {
+                            text: ''
+                        },
+                        xAxis: {
+                            categories: [
+                                '',
+                                'Enero',
+                                'Febrero',
+                                'Marzo',
+                                'Abril',
+                                'Mayo',
+                                'Junio',
+                                'Julio',
+                                'Agosto',
+                                'Septiembre',
+                                'Octubre',
+                                'Noviembre',
+                                'Diciembre'
+                            ],
+                            crosshair: true
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: 'Facturación ($)'
+                            }
+                        },
+                        tooltip: {
+                            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                '<td style="padding:0"><b>${point.y:.1f} </b></td></tr>',
+                            footerFormat: '</table>',
+                            shared: true,
+                            useHTML: true
+                        },
+                        plotOptions: {
+                            column: {
+                                pointPadding: 0.2,
+                                borderWidth: 0
+                            }
+                            },
+                            series: response.result
+                    });
+                                },
+                    error:function(err,error)
+                    {
+                        console.log(error)
+                        alert(error);
+                    }
+                }
+                );        
+
+    </script>
+}

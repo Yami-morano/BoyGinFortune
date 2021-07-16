@@ -1,0 +1,52 @@
+﻿<h2>Bienvenido al chat</h2>
+<div class="container">
+    <div class="row">
+        <input type="text" id="txtmensaje" />
+        <input type="button" id="btnenviar" class="btn btn-success" value="Enviar" />
+
+    </div>
+    <div class="row">
+        <h2>CONVERSACIONES</h2>
+        <input type="hidden" id="hdnombre" />
+        <ul id="mensajitos"></ul>
+    </div>
+</div>
+
+@section scripts{
+
+    <script src="~/Scripts/jquery.signalR-2.4.2.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        $(function () {
+
+            var chat = $.connection.chatHub;
+
+            chat.client.enviarMensaje = function (nombre, txtmensaje) {
+
+                $('#mensajitos').append('<li><strong>' + htmlEncode(nombre)
+                    + '</strong>: ' + htmlEncode(txtmensaje) + '</li>');
+            };
+
+            $('#hdnombre').val(prompt('Digita tu nombre:', ''));
+
+            $('#txtmensaje').focus();
+
+            $.connection.hub.start().done(function () {
+                $('#btnenviar').click(function () {
+
+                    chat.server.enviar($('#hdnombre').val(), $('#txtmensaje').val());
+
+                    $('#txtmensaje').val('').focus();
+                });
+            });
+        });
+
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+
+
+
+}

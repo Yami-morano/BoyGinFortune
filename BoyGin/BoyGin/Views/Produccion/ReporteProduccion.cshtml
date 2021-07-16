@@ -1,0 +1,75 @@
+﻿
+@*@{
+    ViewBag.Title = "ReporteProduccion";
+}
+
+<h2>Reporte de Produccion</h2>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/highcharts.js"></script>
+
+@{
+
+
+}
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+
+</figure>
+
+<script>
+    $.ajax(
+            {
+                url: "@Url.Action("grafico", "Produccion")", //genera la url dle controlador
+                data: {}, // le paso los parametros que son los que recibe el controlador
+                type: "get", // porque el metodo Json es post
+                success: function (response) {
+                    console.log(response)
+                    Highcharts.chart('container', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Cantidad producida de cada productos'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: {point.y} (<b>{point.percentage:.1f}%</b>)'
+                        },
+                        accessibility: {
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'producidos',
+                            colorByPoint: true,
+                            data: response.result
+                        }]
+                    })
+                },
+                error: function (err, error) {
+                    console.log(error)
+                    alert(error);
+                }
+
+            })
+
+</script>*@

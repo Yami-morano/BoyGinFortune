@@ -1,0 +1,87 @@
+﻿@model List<BoyGin.Models.DTODetalleFactura>
+@{
+    /**/
+
+    ViewBag.Title = "FacturacionPorFecha";
+    var reporte = ViewBag.reporte;
+}
+
+
+<h2>Facturacion Por Fecha</h2>
+
+@using (Html.BeginForm("FacturacionPorFecha", "Factura", FormMethod.Post))
+{
+   
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Busqueda de facturas
+        </div>
+        <div class="panel-body">
+            <div class="form-group" type="datepicker">
+                @Html.Label("Intervalo de fechas de factura")
+                @Html.TextBox("fi", "", new { @class = "datefield", type = "date" })
+                @Html.TextBox("ff", "", new { @class = "datefield", type = "date" })
+               
+            </div>
+            <div class=" form-group">
+                @Html.Label("Nombre de cliente")
+                @Html.TextBox("cadena", "", new { @class = "form-control" })
+
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">Buscar</button>
+                @if (Model != null)
+                {
+                    <a href="@Url.Action("ReporteBarras", "Factura", new { @reporte = ViewBag.reporte })" class="btn btn-primary">Reporte facturación</a>
+                }
+            </div>
+            <div id="alo">
+
+            </div>
+        </div>
+    </div>
+}
+@if (Model != null)
+{
+
+    <table class=" table table-striped ">
+        <tr>
+            <th>Numero de factura</th>
+            <th>Nombre Cliente</th>
+            <th>Fecha factura</th>
+            <th>Total de la factura</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.idFactura</td>
+                <td>@item.nombreCliente</td>
+                <td>@item.fechaFactura</td>
+                <td>@item.total</td>
+                <td> <a href="@Url.Action("Detalles", "Factura", new { @idFactura = item.idFactura})" class="btn btn-primary">Ver detalle</a></td>
+            </tr>
+        }
+    </table>
+
+    @*<script>
+            var btn = document.createElement("button"); // create       button using java script
+            btn.className = "btnsize";
+            btn.type = "sumbit";
+            btn.id = "btnid";
+
+            var txt = document.createTextNode("texto"); //creat text on button
+            btn.appendChild(txt); //attached text on button
+            document.getElementById("alo").appendChild(btn); //atache button with text in div
+        </script>*@
+
+
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('.date-picker').datepicker({ dateFormat: 'dd-mm-yy' });
+    });
+</script>
+
+

@@ -1,0 +1,49 @@
+﻿@model BoyGin.Models.VMCompraMateriaPrima
+@{
+    ViewBag.Title = "CompraMateriaPrima";
+
+
+}
+
+<h2>Registro de Compra de materias primas</h2>
+
+
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label>Fecha Compra</label>
+                <label>@(DateTime.UtcNow.ToString("dd-MM-yyyy"))</label>
+
+            </div>
+            <div class="form-group">
+                <label>Descripcion de la materia prima</label>
+                @Html.DropDownListFor(x => x.compraMPModel.idMateriaPrima, new SelectList(Model.materiasPrimas, "idMateriaPrima", "descripcionMateriaPrima"), "Seleccione la materia prima", htmlAttributes: new { @class = "form-control", @id = "cmbMateriaPrima" })
+                @Html.ValidationMessageFor(model => model.compraMPModel.idMateriaPrima, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label>Proveedor</label>
+                @Html.DropDownListFor(x => x.compraMPModel.idProveedor, new SelectList(Model.proveedorModel, "idProveedor", "nombre_razonSocial"), "Seleccione el proveedor", htmlAttributes: new { @class = "form-control", @id = "cmbProveedor" })
+                @Html.ValidationMessageFor(model => model.compraMPModel.idProveedor, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label>Cantidad comprada</label>
+
+                @Html.TextBoxFor(x => x.compraMPModel.cantidadComprada, htmlAttributes: new { @class = "form-control", @id = "txtCantidad" })
+                @Html.ValidationMessageFor(model => model.compraMPModel.cantidadComprada, "", new { @class = "text-danger" })
+            </div>
+
+            <input type="submit" value="Agregar compra" class="btn btn-primary" />
+           
+
+        }
+    </div>
+    <div class="col-md-2"></div>
+</div>
+

@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BoyGinFortuneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DNI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Domicilio" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Localidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdProvincia" Type="Int32" />
+    <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdUsuario" Type="Int32" />
+    <NavigationProperty Name="Provincias" Relationship="Self.FK_Clientes_Provincias" FromRole="Clientes" ToRole="Provincias" />
+    <NavigationProperty Name="Usuarios" Relationship="Self.FK_Clientes_Usuarios" FromRole="Clientes" ToRole="Usuarios" />
+    <NavigationProperty Name="Facturas" Relationship="Self.FK_Facturas_Clientes" FromRole="Clientes" ToRole="Facturas" />
+  </EntityType>
+  <EntityType Name="ComprasMateriaPrima">
+    <Key>
+      <PropertyRef Name="IdCompraMateriaPrima" />
+    </Key>
+    <Property Name="IdCompraMateriaPrima" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdMateriaPrima" Type="Int32" />
+    <Property Name="IdProveedor" Type="Int32" />
+    <Property Name="FechaCompra" Type="DateTime" Precision="0" />
+    <Property Name="CantidadComprada" Type="Int32" />
+    <NavigationProperty Name="MateriasPrimas" Relationship="Self.FK_ComprasMateriaPrima_MateriasPrimas" FromRole="ComprasMateriaPrima" ToRole="MateriasPrimas" />
+    <NavigationProperty Name="Proveedores" Relationship="Self.FK_ComprasMateriaPrima_Proveedores" FromRole="ComprasMateriaPrima" ToRole="Proveedores" />
+  </EntityType>
+  <EntityType Name="DetallesFactura">
+    <Key>
+      <PropertyRef Name="IdDetalleFactura" />
+    </Key>
+    <Property Name="IdDetalleFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdFactura" Type="Int32" />
+    <Property Name="IdProducto" Type="Int32" />
+    <Property Name="PrecioUnitario" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cantidad" Type="Int32" />
+    <NavigationProperty Name="Facturas" Relationship="Self.FK_DetallesFactura_Facturas" FromRole="DetallesFactura" ToRole="Facturas" />
+    <NavigationProperty Name="Productos" Relationship="Self.FK_DetallesFactura_Productos" FromRole="DetallesFactura" ToRole="Productos" />
+  </EntityType>
+  <EntityType Name="Facturas">
+    <Key>
+      <PropertyRef Name="IdFactura" />
+    </Key>
+    <Property Name="IdFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdCliente" Type="Int32" />
+    <Property Name="FechaFactura" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK_Facturas_Clientes" FromRole="Facturas" ToRole="Clientes" />
+    <NavigationProperty Name="DetallesFactura" Relationship="Self.FK_DetallesFactura_Facturas" FromRole="Facturas" ToRole="DetallesFactura" />
+  </EntityType>
+  <EntityType Name="HistorialProduccion">
+    <Key>
+      <PropertyRef Name="IdProduccion" />
+    </Key>
+    <Property Name="IdProduccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FechaProduccion" Type="DateTime" Precision="0" />
+    <Property Name="CantidadProducida" Type="Int32" />
+    <NavigationProperty Name="Produccion_MateriasPrimas" Relationship="Self.FK_Produccion_MateriasPrimas_HistorialProduccion" FromRole="HistorialProduccion" ToRole="Produccion_MateriasPrimas" />
+  </EntityType>
+  <EntityType Name="MateriasPrimas">
+    <Key>
+      <PropertyRef Name="IdMateriaPrima" />
+    </Key>
+    <Property Name="IdMateriaPrima" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DescripcionMateriaPrima" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StockMateriaPrima" Type="Int32" />
+    <NavigationProperty Name="ComprasMateriaPrima" Relationship="Self.FK_ComprasMateriaPrima_MateriasPrimas" FromRole="MateriasPrimas" ToRole="ComprasMateriaPrima" />
+    <NavigationProperty Name="Produccion_MateriasPrimas" Relationship="Self.FK_Produccion_MateriasPrimas_MateriasPrimas" FromRole="MateriasPrimas" ToRole="Produccion_MateriasPrimas" />
+  </EntityType>
+  <EntityType Name="Produccion_MateriasPrimas">
+    <Key>
+      <PropertyRef Name="IdProdu_MatPrima" />
+    </Key>
+    <Property Name="IdProdu_MatPrima" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdProduccion" Type="Int32" />
+    <Property Name="IdMateriasPrimas" Type="Int32" />
+    <Property Name="CantidadMateriaUsada" Type="Int32" />
+    <Property Name="IdProducto" Type="Int32" />
+    <NavigationProperty Name="HistorialProduccion" Relationship="Self.FK_Produccion_MateriasPrimas_HistorialProduccion" FromRole="Produccion_MateriasPrimas" ToRole="HistorialProduccion" />
+    <NavigationProperty Name="MateriasPrimas" Relationship="Self.FK_Produccion_MateriasPrimas_MateriasPrimas" FromRole="Produccion_MateriasPrimas" ToRole="MateriasPrimas" />
+    <NavigationProperty Name="Productos" Relationship="Self.FK_Produccion_MateriasPrimas_Productos" FromRole="Produccion_MateriasPrimas" ToRole="Productos" />
+  </EntityType>
+  <EntityType Name="Productos">
+    <Key>
+      <PropertyRef Name="IdProducto" />
+    </Key>
+    <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreProducto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IdTipoProducto" Type="Int32" />
+    <Property Name="PrecioProducto" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="StockProducto" Type="Int32" />
+    <NavigationProperty Name="DetallesFactura" Relationship="Self.FK_DetallesFactura_Productos" FromRole="Productos" ToRole="DetallesFactura" />
+    <NavigationProperty Name="Produccion_MateriasPrimas" Relationship="Self.FK_Produccion_MateriasPrimas_Productos" FromRole="Productos" ToRole="Produccion_MateriasPrimas" />
+    <NavigationProperty Name="TiposProducto" Relationship="Self.FK_Productos_TiposProducto" FromRole="Productos" ToRole="TiposProducto" />
+  </EntityType>
+  <EntityType Name="Proveedores">
+    <Key>
+      <PropertyRef Name="IdProveedor" />
+    </Key>
+    <Property Name="IdProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_razonSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Apellido_TipoSoc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Localidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdProvincia" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ComprasMateriaPrima" Relationship="Self.FK_ComprasMateriaPrima_Proveedores" FromRole="Proveedores" ToRole="ComprasMateriaPrima" />
+  </EntityType>
+  <EntityType Name="Provincias">
+    <Key>
+      <PropertyRef Name="IdProvincia" />
+    </Key>
+    <Property Name="IdProvincia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreProvincia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK_Clientes_Provincias" FromRole="Provincias" ToRole="Clientes" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="IdRol" />
+    </Key>
+    <Property Name="IdRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DescripcionRol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuarios_Roles" FromRole="Roles" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TiposProducto">
+    <Key>
+      <PropertyRef Name="IdTipoProducto" />
+    </Key>
+    <Property Name="IdTipoProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreTipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Productos" Relationship="Self.FK_Productos_TiposProducto" FromRole="TiposProducto" ToRole="Productos" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Contraseña" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdRol" Type="Int32" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK_Clientes_Usuarios" FromRole="Usuarios" ToRole="Clientes" />
+    <NavigationProperty Name="Roles" Relationship="Self.FK_Usuarios_Roles" FromRole="Usuarios" ToRole="Roles" />
+  </EntityType>
+  <Association Name="FK_Clientes_Provincias">
+    <End Role="Provincias" Type="Self.Provincias" Multiplicity="0..1" />
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provincias">
+        <PropertyRef Name="IdProvincia" />
+      </Principal>
+      <Dependent Role="Clientes">
+        <PropertyRef Name="IdProvincia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Clientes_Usuarios">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="Clientes">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Facturas_Clientes">
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="0..1" />
+    <End Role="Facturas" Type="Self.Facturas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="Facturas">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComprasMateriaPrima_MateriasPrimas">
+    <End Role="MateriasPrimas" Type="Self.MateriasPrimas" Multiplicity="0..1" />
+    <End Role="ComprasMateriaPrima" Type="Self.ComprasMateriaPrima" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MateriasPrimas">
+        <PropertyRef Name="IdMateriaPrima" />
+      </Principal>
+      <Dependent Role="ComprasMateriaPrima">
+        <PropertyRef Name="IdMateriaPrima" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComprasMateriaPrima_Proveedores">
+    <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="0..1" />
+    <End Role="ComprasMateriaPrima" Type="Self.ComprasMateriaPrima" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedores">
+        <PropertyRef Name="IdProveedor" />
+      </Principal>
+      <Dependent Role="ComprasMateriaPrima">
+        <PropertyRef Name="IdProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetallesFactura_Facturas">
+    <End Role="Facturas" Type="Self.Facturas" Multiplicity="0..1" />
+    <End Role="DetallesFactura" Type="Self.DetallesFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Facturas">
+        <PropertyRef Name="IdFactura" />
+      </Principal>
+      <Dependent Role="DetallesFactura">
+        <PropertyRef Name="IdFactura" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetallesFactura_Productos">
+    <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
+    <End Role="DetallesFactura" Type="Self.DetallesFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Productos">
+        <PropertyRef Name="IdProducto" />
+      </Principal>
+      <Dependent Role="DetallesFactura">
+        <PropertyRef Name="IdProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Produccion_MateriasPrimas_HistorialProduccion">
+    <End Role="HistorialProduccion" Type="Self.HistorialProduccion" Multiplicity="0..1" />
+    <End Role="Produccion_MateriasPrimas" Type="Self.Produccion_MateriasPrimas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HistorialProduccion">
+        <PropertyRef Name="IdProduccion" />
+      </Principal>
+      <Dependent Role="Produccion_MateriasPrimas">
+        <PropertyRef Name="IdProduccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Produccion_MateriasPrimas_MateriasPrimas">
+    <End Role="MateriasPrimas" Type="Self.MateriasPrimas" Multiplicity="0..1" />
+    <End Role="Produccion_MateriasPrimas" Type="Self.Produccion_MateriasPrimas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MateriasPrimas">
+        <PropertyRef Name="IdMateriaPrima" />
+      </Principal>
+      <Dependent Role="Produccion_MateriasPrimas">
+        <PropertyRef Name="IdMateriasPrimas" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Produccion_MateriasPrimas_Productos">
+    <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
+    <End Role="Produccion_MateriasPrimas" Type="Self.Produccion_MateriasPrimas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Productos">
+        <PropertyRef Name="IdProducto" />
+      </Principal>
+      <Dependent Role="Produccion_MateriasPrimas">
+        <PropertyRef Name="IdProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Productos_TiposProducto">
+    <End Role="TiposProducto" Type="Self.TiposProducto" Multiplicity="0..1" />
+    <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TiposProducto">
+        <PropertyRef Name="IdTipoProducto" />
+      </Principal>
+      <Dependent Role="Productos">
+        <PropertyRef Name="IdTipoProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuarios_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="IdRol" />
+      </Principal>
+      <Dependent Role="Usuarios">
+        <PropertyRef Name="IdRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BoyGinFortuneEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+    <EntitySet Name="ComprasMateriaPrima" EntityType="Self.ComprasMateriaPrima" />
+    <EntitySet Name="DetallesFactura" EntityType="Self.DetallesFactura" />
+    <EntitySet Name="Facturas" EntityType="Self.Facturas" />
+    <EntitySet Name="HistorialProduccion" EntityType="Self.HistorialProduccion" />
+    <EntitySet Name="MateriasPrimas" EntityType="Self.MateriasPrimas" />
+    <EntitySet Name="Produccion_MateriasPrimas" EntityType="Self.Produccion_MateriasPrimas" />
+    <EntitySet Name="Productos" EntityType="Self.Productos" />
+    <EntitySet Name="Proveedores" EntityType="Self.Proveedores" />
+    <EntitySet Name="Provincias" EntityType="Self.Provincias" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TiposProducto" EntityType="Self.TiposProducto" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+    <AssociationSet Name="FK_Clientes_Provincias" Association="Self.FK_Clientes_Provincias">
+      <End Role="Provincias" EntitySet="Provincias" />
+      <End Role="Clientes" EntitySet="Clientes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Clientes_Usuarios" Association="Self.FK_Clientes_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Clientes" EntitySet="Clientes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Facturas_Clientes" Association="Self.FK_Facturas_Clientes">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Facturas" EntitySet="Facturas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComprasMateriaPrima_MateriasPrimas" Association="Self.FK_ComprasMateriaPrima_MateriasPrimas">
+      <End Role="MateriasPrimas" EntitySet="MateriasPrimas" />
+      <End Role="ComprasMateriaPrima" EntitySet="ComprasMateriaPrima" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComprasMateriaPrima_Proveedores" Association="Self.FK_ComprasMateriaPrima_Proveedores">
+      <End Role="Proveedores" EntitySet="Proveedores" />
+      <End Role="ComprasMateriaPrima" EntitySet="ComprasMateriaPrima" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetallesFactura_Facturas" Association="Self.FK_DetallesFactura_Facturas">
+      <End Role="Facturas" EntitySet="Facturas" />
+      <End Role="DetallesFactura" EntitySet="DetallesFactura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetallesFactura_Productos" Association="Self.FK_DetallesFactura_Productos">
+      <End Role="Productos" EntitySet="Productos" />
+      <End Role="DetallesFactura" EntitySet="DetallesFactura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Produccion_MateriasPrimas_HistorialProduccion" Association="Self.FK_Produccion_MateriasPrimas_HistorialProduccion">
+      <End Role="HistorialProduccion" EntitySet="HistorialProduccion" />
+      <End Role="Produccion_MateriasPrimas" EntitySet="Produccion_MateriasPrimas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Produccion_MateriasPrimas_MateriasPrimas" Association="Self.FK_Produccion_MateriasPrimas_MateriasPrimas">
+      <End Role="MateriasPrimas" EntitySet="MateriasPrimas" />
+      <End Role="Produccion_MateriasPrimas" EntitySet="Produccion_MateriasPrimas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Produccion_MateriasPrimas_Productos" Association="Self.FK_Produccion_MateriasPrimas_Productos">
+      <End Role="Productos" EntitySet="Productos" />
+      <End Role="Produccion_MateriasPrimas" EntitySet="Produccion_MateriasPrimas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Productos_TiposProducto" Association="Self.FK_Productos_TiposProducto">
+      <End Role="TiposProducto" EntitySet="TiposProducto" />
+      <End Role="Productos" EntitySet="Productos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuarios_Roles" Association="Self.FK_Usuarios_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Usuarios" EntitySet="Usuarios" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

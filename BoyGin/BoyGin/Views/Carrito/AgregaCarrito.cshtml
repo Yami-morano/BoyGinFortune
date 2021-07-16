@@ -1,0 +1,83 @@
+﻿
+@model List<BoyGin.Models.Carrito>
+@{
+    ViewBag.Title = "AgregaCarrito";
+
+}
+
+<h2>Carrito de compra</h2>
+<div class="container-fluid">
+    <table class=" table table-bordered table-striped table-responsive table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock del producto</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                double total = 0;
+            }
+            @if (Session["carrito"] != null)
+            {
+                foreach (var item in Session["carrito"] as List<BoyGin.Models.Carrito>)
+                {
+                    total += (double)(item.cantidadRequerida * item.precioProducto);
+                    <tr>
+                        <td>@item.idProducto</td>
+                        <td>@item.nombreProducto</td>
+                        <td>@String.Format("{0:C}", item.precioProducto)</td>
+                        <td>@item.stockProducto</td>
+                        <td>@item.cantidadRequerida</td>
+                        <td>@String.Format("{0:C}", (item.cantidadRequerida * item.precioProducto))</td>
+                        <td>@Html.ActionLink("Eliminar", "Delete", "Carrito", new { Id = item.idProducto }, null)</td>
+                    </tr>
+                }
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="5" class="info text-center">Total</th>
+                <th class="info">@String.Format("{0:C}", total)</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div class="col-xs-12 col-md-8"></div>
+<div class="col-xs-6 col-md-4">
+    <div class="btn btn-info btn-lg">
+        @Html.ActionLink("Seguir Comprando", "ProductoCarrito", "ProductoCarrito", null, null)
+    </div>
+    <br />
+    <br />
+    <div class="btn btn-default bg-primary btn-lg">
+        @Html.ActionLink("Pago en efectivo o transferencias", "FinalizaCompra", "Carrito", null, null)
+
+    </div>
+    <div class="btn btn-default bg-primary btn-lg">
+        @Html.ActionLink("Pagar con mercado pago", "MercadoPago", "MercadoPago", null, null)
+        @*<input type="button" value="Pagar" class="btn btn-primary" onclick="checkout.open()">*@
+    </div>
+
+</div>
+
+@*<script src="https://sdk.mercadopago.com/js/v2"></script>
+
+<script>
+        // Agrega credenciales de SDK
+        const mp = new MercadoPago('TEST-c069d4cc-089b-4bdd-99e5-d6a714344267', {
+            locale: 'es-AR'
+        });
+
+        const checkout = mp.checkout({
+            preference: {
+                id: '@ViewData["IdPreferencia"]'
+            }
+        });
+
+</script>*@

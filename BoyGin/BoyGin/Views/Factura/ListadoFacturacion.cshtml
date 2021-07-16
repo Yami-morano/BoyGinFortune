@@ -1,0 +1,37 @@
+﻿@model List<BoyGin.Models.DTODetalleFactura>
+@{
+    ViewBag.Title = "ListadoFacturacion";
+}
+
+<h2>Listado Facturación</h2>
+
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+
+        <th>Numero de factura</th>
+        <th>Fecha</th>
+        <th>Nombre cliente</th>
+        <th>Total</th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+<tr>
+
+    <td>@item.idFactura</td>
+    <td>@item.fechaFactura</td>
+    <td>@item.nombreCliente</td>
+    <td>@item.total</td>
+    <td> <a href="@Url.Action("Detalles", "Factura", new { @idFactura = item.idFactura})" class="btn btn-primary">Ver detalle</a></td>
+
+
+</tr>
+    }
+
+</table>
+
+
+
+

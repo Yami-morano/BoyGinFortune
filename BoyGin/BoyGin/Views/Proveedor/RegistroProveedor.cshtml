@@ -1,0 +1,67 @@
+﻿@model BoyGin.Models.VMProveedor
+@{
+    ViewBag.Title = "RegistroProveedor";
+}
+
+<h2>Registro Provedor</h2>
+
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label>Nombre / Razón Social</label>
+                @Html.TextBoxFor(x => x.proveedorModel.nombre_razonSocial, htmlAttributes: new { @class = "form-control", @id = "txtNombre" })
+                @Html.ValidationMessageFor(model => model.proveedorModel.nombre_razonSocial, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label>Apellido/ Tipo Sociedad</label>
+                @Html.TextBoxFor(x => x.proveedorModel.apellido_TipoSoc, htmlAttributes: new { @class = "form-control", @id = "txtApellido" })
+                @Html.ValidationMessageFor(model => model.proveedorModel.apellido_TipoSoc, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label>Dirección</label>
+                @Html.TextBoxFor(x => x.proveedorModel.direccion, htmlAttributes: new { @class = "form-control", @id = "txtDireccion" })
+                @Html.ValidationMessageFor(model => model.proveedorModel.direccion, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label>Número</label>
+                @Html.TextBoxFor(x => x.proveedorModel.numeroDireccion, htmlAttributes: new { @class = "form-control", @id = "txtNumeroDireccion" })
+                @Html.ValidationMessageFor(model => model.proveedorModel.numeroDireccion, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label>Localidad</label>
+                @Html.TextBoxFor(x => x.proveedorModel.localidad, htmlAttributes: new { @class = "form-control", @id = "txtLocalidad" })
+                @Html.ValidationMessageFor(model => model.proveedorModel.localidad, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label>Provincia</label>
+                @Html.DropDownListFor(x => x.proveedorModel.idProvincia, new SelectList(Model.provinciaModel, "idProvincia", "nombreProvincia"), "Seleccione la provincia", htmlAttributes: new { @class = "form-control", @id = "cmbProvincia" })
+                @Html.ValidationMessageFor(model => model.proveedorModel.idProvincia, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                @Html.TextBoxFor(x => x.proveedorModel.email, htmlAttributes: new { @class = "form-control", @id = "txtEmail" })
+                @Html.ValidationMessageFor(model => model.proveedorModel.email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label>Teléfono</label>
+                @Html.TextBoxFor(x => x.proveedorModel.telefono, htmlAttributes: new { @class = "form-control", @id = "txtTelefono" })
+                @Html.ValidationMessageFor(model => model.proveedorModel.telefono, "", new { @class = "text-danger" })
+            </div>
+
+
+            <input type="submit" value="Registrar" class="btn btn-primary" />
+
+        }
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+

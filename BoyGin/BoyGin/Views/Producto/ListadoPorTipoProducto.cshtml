@@ -1,0 +1,154 @@
+﻿@model BoyGin.Models.ListaPorTipoProducto
+@{
+    ViewBag.Title = "ListadoPorTipoProducto";
+}
+
+<h2>Busqueda por tipo de Productos</h2>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/highcharts.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+@using (Html.BeginForm("ListadoPorTipoProducto", "Producto", FormMethod.Post))
+{
+
+    <div class="form-group">
+        <label>Tipo de producto</label>
+        @Html.DropDownListFor(x => x.tiposLista, new SelectList(Model.tiposLista, "idTipoProducto", "nombreTipo"), "Seleccione el tipo", htmlAttributes: new { @class = "form-control", @id = "cmbTipo" })
+
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-default">Buscar</button>
+    </div>
+}
+@if (Model.ListaProducto != null)
+{
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Precio</th>
+        </tr>
+
+        @foreach (var item in Model.ListaProducto)
+        {
+
+            <tr>
+                <td>@item.nombreProducto</td>
+                <td>@item.descripcion</td>
+                <td>@item.precioProducto</td>
+            </tr>
+        }
+    </table>
+
+
+
+    var nombreSerializado = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.listaNomProd));
+    var stockSerializado = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject((ViewBag.listaStockProd as List<double>)));
+    <h3>Stock por tipo de producto</h3>
+    <canvas id="grafico" width="400" height="150" style="background-color:aliceblue"></canvas>
+    <br />
+    <h3>Stock de productos</h3>
+    
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+
+    </figure>
+
+    @section Scripts{
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+        <script>
+        var meses = @nombreSerializado,
+           facturadoMes = @stockSerializado;
+        $(document)
+            .ready(function () {
+                var ctx = $('#grafico');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: meses,
+                        datasets: [{
+                            data: facturadoMes,
+                             backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            });
+        </script>
+
+
+        <script>
+    $.ajax(
+            {
+                url: "@Url.Action("graficoStock", "Producto")", //genera la url dle controlador
+                data: {}, // le paso los parametros que son los que recibe el controlador
+                type: "get", // porque el metodo Json es post
+                success: function (response) {
+                    console.log(response)
+                    Highcharts.chart('container', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Stock de cada producto'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: {point.y} (<b>{point.percentage:.1f}%</b>)'
+                        },
+                        accessibility: {
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'cantidad',
+                            colorByPoint: true,
+                            data: response.result
+                        }]
+                    })
+                },
+                error: function (err, error) {
+                    console.log(error)
+                    alert(error);
+                }
+
+            })
+
+        </script>
+
+
+
+
+    }
+}

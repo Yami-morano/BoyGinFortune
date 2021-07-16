@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="faf271c491474b86ab6b6c77d222ed53" Name="Diagram1">
+        <EntityTypeShape EntityType="BoyGinFortuneModel.Clientes" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.ComprasMateriaPrima" Width="1.5" PointX="8.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.DetallesFactura" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.Facturas" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.HistorialProduccion" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.MateriasPrimas" Width="1.5" PointX="6" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.Produccion_MateriasPrimas" Width="1.5" PointX="8.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.Productos" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.Proveedores" Width="1.5" PointX="6" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.Provincias" Width="1.5" PointX="1.5" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.Roles" Width="1.5" PointX="1.5" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.sysdiagrams" Width="1.5" PointX="8.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.TiposProducto" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BoyGinFortuneModel.Usuarios" Width="1.5" PointX="1.5" PointY="15.125" IsExpanded="true" />
+        <AssociationConnector Association="BoyGinFortuneModel.FK_Clientes_Provincias" ManuallyRouted="false" />
+        <AssociationConnector Association="BoyGinFortuneModel.FK_Clientes_Usuarios" ManuallyRouted="false" />
+        <AssociationConnector Association="BoyGinFortuneModel.FK_Facturas_Clientes" ManuallyRouted="false" />
+        <AssociationConnector Association="BoyGinFortuneModel.FK_ComprasMateriaPrima_MateriasPrimas" ManuallyRouted="false" />
+        <AssociationConnector Association="BoyGinFortuneModel.FK_ComprasMateriaPrima_Proveedores" ManuallyRouted="false" />
+        <AssociationConnector Association="BoyGinFortuneModel.FK_DetallesFactura_Facturas" ManuallyRouted="false" />
+        <AssociationConnector Association="BoyGinFortuneModel.FK_DetallesFactura_Productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BoyGinFortuneModel.FK_Produccion_MateriasPrimas_HistorialProduccion" ManuallyRouted="false" />
+        <AssociationConnector Association="BoyGinFortuneModel.FK_Produccion_MateriasPrimas_MateriasPrimas" ManuallyRouted="false" />
+        <AssociationConnector Association="BoyGinFortuneModel.FK_Produccion_MateriasPrimas_Productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BoyGinFortuneModel.FK_Productos_TiposProducto" ManuallyRouted="false" />
+        <AssociationConnector Association="BoyGinFortuneModel.FK_Usuarios_Roles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

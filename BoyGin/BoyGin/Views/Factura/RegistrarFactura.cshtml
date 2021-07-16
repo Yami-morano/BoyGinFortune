@@ -1,0 +1,52 @@
+﻿@model BoyGin.Models.VMDetalleFactura
+@{
+    ViewBag.Title = "RegistrarFactura";
+   
+}
+
+<h2>Registrar Factura</h2>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+
+
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                <label>Fecha</label>
+                <label>@(DateTime.UtcNow.ToString("dd-MM-yyyy"))</label>
+            </div>
+
+            <div class="form-group">
+                <label>Cliente</label>
+                @Html.DropDownListFor(x => x.facturaModel.idCliente, new SelectList(Model.clienteModel, "idCliente", "nombreCliente"), "Cliente", htmlAttributes: new { @class = "form-control", @id = "cmbCliente" })
+
+            </div>
+
+            <div class="form-group">
+                <label>Producto</label>
+                @Html.DropDownListFor(x => x.detalleFacturaModel.idProducto, new SelectList(Model.productoModel, "idProducto", "nombreProducto"), "Seleccione el producto", htmlAttributes: new { @class = "form-control", @id = "cmbProducto" })
+
+            </div>
+
+            <div class="form-group">
+                <label>Precio</label>
+
+                @Html.TextBoxFor(x => x.detalleFacturaModel.precioUnitario, htmlAttributes: new { @class = "form-control", @id = "txtPrecio" })
+            </div>
+
+            <div class="form-group">
+                <label>Cantidad</label>
+
+                @Html.TextBoxFor(x => x.detalleFacturaModel.cantidad, htmlAttributes: new { @class = "form-control", @id = "txtCantida" })
+            </div>
+
+
+
+            <input type="submit" value="Aceptar" class="btn btn-primary" />
+        }
+    </div>
+    <div class="col-md-2"></div>
+</div>
+

@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BoyGinFortuneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="BoyGinFortuneEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Clientes" EntityType="BoyGinFortuneModel.Clientes" />
+    <EntitySet Name="DetallesFactura" EntityType="BoyGinFortuneModel.DetallesFactura" />
+    <EntitySet Name="Facturas" EntityType="BoyGinFortuneModel.Facturas" />
+    <EntitySet Name="Productos" EntityType="BoyGinFortuneModel.Productos" />
+    <EntitySet Name="Provincias" EntityType="BoyGinFortuneModel.Provincias" />
+    <AssociationSet Name="FK_Clientes_Provincias" Association="BoyGinFortuneModel.FK_Clientes_Provincias">
+      <End Role="Provincias" EntitySet="Provincias" />
+      <End Role="Clientes" EntitySet="Clientes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Facturas_Clientes" Association="BoyGinFortuneModel.FK_Facturas_Clientes">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Facturas" EntitySet="Facturas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetallesFactura_Facturas" Association="BoyGinFortuneModel.FK_DetallesFactura_Facturas">
+      <End Role="Facturas" EntitySet="Facturas" />
+      <End Role="DetallesFactura" EntitySet="DetallesFactura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetallesFactura_Productos" Association="BoyGinFortuneModel.FK_DetallesFactura_Productos">
+      <End Role="Productos" EntitySet="Productos" />
+      <End Role="DetallesFactura" EntitySet="DetallesFactura" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DNI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Domicilio" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Localidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdProvincia" Type="Int32" />
+    <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdUsuario" Type="Int32" />
+    <NavigationProperty Name="Provincias" Relationship="BoyGinFortuneModel.FK_Clientes_Provincias" FromRole="Clientes" ToRole="Provincias" />
+    <NavigationProperty Name="Facturas" Relationship="BoyGinFortuneModel.FK_Facturas_Clientes" FromRole="Clientes" ToRole="Facturas" />
+  </EntityType>
+  <EntityType Name="DetallesFactura">
+    <Key>
+      <PropertyRef Name="IdDetalleFactura" />
+    </Key>
+    <Property Name="IdDetalleFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdFactura" Type="Int32" />
+    <Property Name="IdProducto" Type="Int32" />
+    <Property Name="PrecioUnitario" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cantidad" Type="Int32" />
+    <NavigationProperty Name="Facturas" Relationship="BoyGinFortuneModel.FK_DetallesFactura_Facturas" FromRole="DetallesFactura" ToRole="Facturas" />
+    <NavigationProperty Name="Productos" Relationship="BoyGinFortuneModel.FK_DetallesFactura_Productos" FromRole="DetallesFactura" ToRole="Productos" />
+  </EntityType>
+  <EntityType Name="Facturas">
+    <Key>
+      <PropertyRef Name="IdFactura" />
+    </Key>
+    <Property Name="IdFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdCliente" Type="Int32" />
+    <Property Name="FechaFactura" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Clientes" Relationship="BoyGinFortuneModel.FK_Facturas_Clientes" FromRole="Facturas" ToRole="Clientes" />
+    <NavigationProperty Name="DetallesFactura" Relationship="BoyGinFortuneModel.FK_DetallesFactura_Facturas" FromRole="Facturas" ToRole="DetallesFactura" />
+  </EntityType>
+  <EntityType Name="Productos">
+    <Key>
+      <PropertyRef Name="IdProducto" />
+    </Key>
+    <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreProducto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IdTipoProducto" Type="Int32" />
+    <Property Name="PrecioProducto" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="StockProducto" Type="Int32" />
+    <NavigationProperty Name="DetallesFactura" Relationship="BoyGinFortuneModel.FK_DetallesFactura_Productos" FromRole="Productos" ToRole="DetallesFactura" />
+  </EntityType>
+  <EntityType Name="Provincias">
+    <Key>
+      <PropertyRef Name="IdProvincia" />
+    </Key>
+    <Property Name="IdProvincia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreProvincia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Clientes" Relationship="BoyGinFortuneModel.FK_Clientes_Provincias" FromRole="Provincias" ToRole="Clientes" />
+  </EntityType>
+  <Association Name="FK_Clientes_Provincias">
+    <End Type="BoyGinFortuneModel.Provincias" Role="Provincias" Multiplicity="0..1" />
+    <End Type="BoyGinFortuneModel.Clientes" Role="Clientes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provincias">
+        <PropertyRef Name="IdProvincia" />
+      </Principal>
+      <Dependent Role="Clientes">
+        <PropertyRef Name="IdProvincia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Facturas_Clientes">
+    <End Type="BoyGinFortuneModel.Clientes" Role="Clientes" Multiplicity="0..1" />
+    <End Type="BoyGinFortuneModel.Facturas" Role="Facturas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="Facturas">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetallesFactura_Facturas">
+    <End Type="BoyGinFortuneModel.Facturas" Role="Facturas" Multiplicity="0..1" />
+    <End Type="BoyGinFortuneModel.DetallesFactura" Role="DetallesFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Facturas">
+        <PropertyRef Name="IdFactura" />
+      </Principal>
+      <Dependent Role="DetallesFactura">
+        <PropertyRef Name="IdFactura" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetallesFactura_Productos">
+    <End Type="BoyGinFortuneModel.Productos" Role="Productos" Multiplicity="0..1" />
+    <End Type="BoyGinFortuneModel.DetallesFactura" Role="DetallesFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Productos">
+        <PropertyRef Name="IdProducto" />
+      </Principal>
+      <Dependent Role="DetallesFactura">
+        <PropertyRef Name="IdProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
