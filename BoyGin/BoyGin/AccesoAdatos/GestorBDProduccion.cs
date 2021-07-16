@@ -400,33 +400,61 @@ namespace BoyGin.AccesoAdatos
         }
 
         //combo año
-        //public List<años> años()
-        //{
-        //    var lista = new List<años>();
+        public List<años> años()
+        {
+            var lista = new List<años>();
 
-        //    var sql = "select DISTINCT YEAR(FechaProduccion) as ano from HistorialProduccion";
-        //    SqlConnection conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["BD"].ConnectionString);
-        //    conexion.Open();
-        //    SqlCommand cmd = new SqlCommand(sql, conexion);
-        //    SqlDataReader dr = cmd.ExecuteReader();
+            var sql = "select DISTINCT YEAR(FechaProduccion) as ano from HistorialProduccion";
+            SqlConnection conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["BD"].ConnectionString);
+            conexion.Open();
+            SqlCommand cmd = new SqlCommand(sql, conexion);
+            SqlDataReader dr = cmd.ExecuteReader();
 
-        //    while (dr.Read())
-        //    {
-        //        años fecha = new años();
+            while (dr.Read())
+            {
+                años fecha = new años();
 
-        //        fecha.año = (int)dr["ano"];
-           
+                fecha.año = (int)dr["ano"];
 
 
-        //        lista.Add(fecha);
-        //    }
 
-        //    dr.Close();
-        //    conexion.Close();
+                lista.Add(fecha);
+            }
 
-        //    return lista;
-        //}
+            dr.Close();
+            conexion.Close();
 
-        
+            return lista;
+        }
+
+        public List<ReporteProduccion> cantidadproducidaAño()
+        {
+            var lista = new List<ReporteProduccion>();
+
+            var sql = @"SELECT year(FechaProduccion) as ano, SUM(CantidadProducida) as cantidad
+                        FROM HistorialProduccion
+                        group by year(FechaProduccion)";
+
+            SqlConnection conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["BD"].ConnectionString);
+            conexion.Open();
+            SqlCommand cmd = new SqlCommand(sql, conexion);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                ReporteProduccion cantidad = new ReporteProduccion();
+
+                cantidad.ano = (int)dr["ano"];
+                cantidad.cantidad = (int)dr["cantidad"];
+
+
+                lista.Add(cantidad);
+            }
+            dr.Close();
+            conexion.Close();
+
+            return lista;
+        }
     }
 }

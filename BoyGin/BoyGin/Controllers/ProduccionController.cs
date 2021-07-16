@@ -114,45 +114,31 @@ namespace BoyGin.Controllers
         }
 
 
-        //public ActionResult ReporteporAño()
-        //{
-        //    GestorBDProduccion gestor = new GestorBDProduccion();
+      
+        public ActionResult ReporteporAño(ReporteProduccion model)
+        {
 
-        //    ReporteProduccion listaAños= new ReporteProduccion();
+            GestorBDProduccion gestor = new GestorBDProduccion();
+            ReporteProduccion listaAños = new ReporteProduccion();
+           
+            listaAños.añoCombo = gestor.años();
 
-        //    listaAños.añoCombo = gestor.años();
-
-        //    return View(listaAños);
-
-        //}
-
-        //[HttpPost]
-        //public ActionResult ReporteporAño(ReporteProduccion model)
-        //{
-
-        //    int año = Convert.ToInt32(Request.Form[0]);
+            listaAños.cantidadProducida = gestor.cantidadproducidaAño();
 
 
-        //    GestorBDProduccion gestor = new GestorBDProduccion();
-        //    ReporteProduccion listaAños = new ReporteProduccion();
-        //    listaAños.cantidadProducida=gestor.
-        //    listaAños.añoCombo = gestor.años();
-        //    ListaTipo.ListaProducto = gestor.ListadoPorTipoProducto(idTipoProducto);
+            var listaAno = new List<int>();
+            var listaCantidad = new List<int>();
+            for (int i = 0; i < listaAños.cantidadProducida.Count; i++)
+            {
+                listaAno.Add(listaAños.cantidadProducida[i].ano);
+                listaCantidad.Add(listaAños.cantidadProducida[i].cantidad);
+            }
 
+            ViewBag.listaAno = listaAno;
+            ViewBag.listaCantidad = listaCantidad;
 
-        //    var listaNombreProducto = new List<string>();
-        //    var listaStockProducto = new List<double>();
-        //    for (int i = 0; i < ListaTipo.ListaProducto.Count; i++)
-        //    {
-        //        listaNombreProducto.Add(ListaTipo.ListaProducto[i].nombreProducto);
-        //        listaStockProducto.Add(ListaTipo.ListaProducto[i].stockProducto);
-        //    }
-
-        //    ViewBag.listaNomProd = listaNombreProducto;
-        //    ViewBag.listaStockProd = listaStockProducto;
-
-        //    return View(ListaTipo);
-        //}
+            return View(listaAños);
+        }
 
         //[HttpGet]
         //public JsonResult graficoAño()

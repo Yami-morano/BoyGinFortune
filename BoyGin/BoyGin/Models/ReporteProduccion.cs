@@ -12,6 +12,9 @@ namespace BoyGin.Models
 
         public List<ReporteProduccion> cantidadProducida { get; set; }
 
-        //public List<años> añoCombo { get; set; }
+        public int ano { get; set; }
+
+        public List<años> añoCombo { get; set; }
+
     }
 }
