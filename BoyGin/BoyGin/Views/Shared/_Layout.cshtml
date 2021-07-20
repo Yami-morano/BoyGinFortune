@@ -123,7 +123,7 @@
                 </div>
             </div>
         </div>*@
-    <div class="mi_navbar navbar-collapse collapse">
+    <div class="mi_navbar navbar-collapse collapse container-fluid">
         @Html.ActionLink("Home", "Index", "Home")
 
         <div class="mi_dropdown">
@@ -202,6 +202,7 @@
                     @Html.ActionLink("Listado de producción", "ListadoProduccion", "Produccion")
                     @*@Html.ActionLink("Reporte", "ReporteProduccion", "Produccion")*@
                     @Html.ActionLink("Reporte Materias Primas", "ReporteMateriasPrimas", "Produccion")
+                    @Html.ActionLink("Producción por año", "ReporteporAño", "Produccion")
                 </div>
 
             }
