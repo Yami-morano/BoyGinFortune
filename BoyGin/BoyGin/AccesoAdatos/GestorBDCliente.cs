@@ -15,90 +15,174 @@ namespace BoyGin.AccesoAdatos
     {
 
 
-        public string Usuario()
-        {
-            var currentEmail = HttpContext.Current.User.Identity.Name;
-            SqlConnection conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["BD"].ConnectionString);
+        //public string Usuario()
+        //{
+        //    var currentEmail = HttpContext.Current.User.Identity.Name;
+        //    SqlConnection conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["BD"].ConnectionString);
 
-            var sql = "SELECT Id FROM AspNetUsers WHERE Email = @Email";
-            conexion.Open();
-            SqlCommand cmd = new SqlCommand(sql, conexion);
-            cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@Email", currentEmail);
-            SqlDataReader dr = cmd.ExecuteReader();
-            dr.Read();
+        //    var sql = "SELECT Id FROM AspNetUsers WHERE Email = @Email";
+        //    conexion.Open();
+        //    SqlCommand cmd = new SqlCommand(sql, conexion);
+        //    cmd.Parameters.Clear();
+        //    cmd.Parameters.AddWithValue("@Email", currentEmail);
+        //    SqlDataReader dr = cmd.ExecuteReader();
+        //    dr.Read();
 
-            var currentIdUser = dr["Id"].ToString();
-            dr.Close();
-            conexion.Close();
+        //    var currentIdUser = dr["Id"].ToString();
+        //    dr.Close();
+        //    conexion.Close();
 
-            return currentIdUser;
-        }
+        //    return currentIdUser;
+        //}
 
-        public string getCurrentUser()
-        {
-            return HttpContext.Current.User.Identity.Name;
-        }
+        //public string getCurrentUser()
+        //{
+        //    return HttpContext.Current.User.Identity.Name;
+        //}
 
-        public void AgregarCliente(Cliente cliente)
-        {
-            SqlConnection conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["BD"].ConnectionString);
-            string estado = "Activo";
-            try
+        //public void AgregarCliente(Cliente cliente)
+        //{
+        //    SqlConnection conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["BD"].ConnectionString);
+        //    string estado = "Activo";
+        //    try
+        //    {
+        //        var sql = "INSERT INTO Clientes (Nombre, Apellido, DNI, Domicilio, NumeroDomicilio, Localidad, IdProvincia, Telefono, IdUsuario, Estado) VALUES (@nombre, @apellido, @dni, @domicilio, @NumeroDomicilio, @localidad, @idProvincia, @telefono, @idUsuario, @estado)";
+
+        //        conexion.Open();
+        //        SqlCommand cmd = new SqlCommand(sql, conexion);
+        //        cmd.Parameters.Clear();
+        //        string currentId = Usuario();
+        //        cmd.Parameters.AddWithValue("@nombre", cliente.nombreCliente);
+        //        cmd.Parameters.AddWithValue("@apellido", cliente.apellidoCliente);
+        //        cmd.Parameters.AddWithValue("@dni", cliente.DNI);
+        //        cmd.Parameters.AddWithValue("@domicilio", cliente.domicilio);
+        //        cmd.Parameters.AddWithValue("@NumeroDomicilio", cliente.numeroDomicilio);
+        //        cmd.Parameters.AddWithValue("@localidad", cliente.localidad);
+        //        cmd.Parameters.AddWithValue("@idProvincia", cliente.idProvincia);
+        //        cmd.Parameters.AddWithValue("@telefono", cliente.telefono);
+        //        cmd.Parameters.AddWithValue("@IdUsuario", currentId);
+        //        cmd.Parameters.AddWithValue("@estado", estado);
+
+        //        //reemplazo el execute nonquery
+        //        SqlDataReader dr = cmd.ExecuteReader();
+        //        dr.Read();
+        //        conexion.Close();
+        //        setRolUser(currentId, conexion);
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        conexion.Close();
+        //    }
+        //}
+
+        //public void setRolUser(string idUser, SqlConnection conexion)
+        //{
+        //    try
+        //    {
+        //        var sql = "INSERT INTO AspNetUserRoles (UserId, RoleId) VALUES (@userId, @idRol)";
+        //        conexion.Open();
+        //        SqlCommand cmd = new SqlCommand(sql, conexion);
+        //        cmd.Parameters.Clear();
+        //        cmd.Parameters.AddWithValue("@userId", idUser);
+        //        cmd.Parameters.AddWithValue("@idRol", 2);
+        //        cmd.ExecuteNonQuery();
+        //        conexion.Close();
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //}
+       
+
+            public string Usuario()
             {
-                var sql = "INSERT INTO Clientes (Nombre, Apellido, DNI, Domicilio, NumeroDomicilio, Localidad, IdProvincia, Telefono, IdUsuario, Estado) VALUES (@nombre, @apellido, @dni, @domicilio, @NumeroDomicilio, @localidad, @idProvincia, @telefono, @idUsuario, @estado)";
-                
+                var currentEmail = HttpContext.Current.User.Identity.Name;
+                SqlConnection conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["BD"].ConnectionString);
+
+                var sql = "SELECT Id FROM AspNetUsers WHERE Email = @Email";
                 conexion.Open();
                 SqlCommand cmd = new SqlCommand(sql, conexion);
                 cmd.Parameters.Clear();
-                string currentId = Usuario();
-                cmd.Parameters.AddWithValue("@nombre", cliente.nombreCliente);
-                cmd.Parameters.AddWithValue("@apellido", cliente.apellidoCliente);
-                cmd.Parameters.AddWithValue("@dni", cliente.DNI);
-                cmd.Parameters.AddWithValue("@domicilio", cliente.domicilio);
-                cmd.Parameters.AddWithValue("@NumeroDomicilio", cliente.numeroDomicilio);
-                cmd.Parameters.AddWithValue("@localidad", cliente.localidad);
-                cmd.Parameters.AddWithValue("@idProvincia", cliente.idProvincia);
-                cmd.Parameters.AddWithValue("@telefono", cliente.telefono);
-                cmd.Parameters.AddWithValue("@IdUsuario", currentId);
-                cmd.Parameters.AddWithValue("@estado", estado);
-
-                //reemplazo el execute nonquery
+                cmd.Parameters.AddWithValue("@Email", currentEmail);
                 SqlDataReader dr = cmd.ExecuteReader();
                 dr.Read();
-                conexion.Close();
-                setRolUser(currentId, conexion);
-            }
-            catch (Exception exc)
-            {
-                throw;
-            }
-            finally
-            {
-                conexion.Close();
-            }
-        }
 
-        public void setRolUser(string idUser, SqlConnection conexion)
-        {
-            try
-            {
-                var sql = "INSERT INTO AspNetUserRoles (UserId, RoleId) VALUES (@userId, @idRol)";
-                conexion.Open();
-                SqlCommand cmd = new SqlCommand(sql, conexion);
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@userId", idUser);
-                cmd.Parameters.AddWithValue("@idRol", 2);
-                cmd.ExecuteNonQuery();
+                var currentIdUser = dr["Id"].ToString();
+                dr.Close();
                 conexion.Close();
-            }
-            catch (Exception)
-            {
 
-                throw;
+                return currentIdUser;
             }
-        }
-        public List<Provincia> ListadoProvincias()
+
+            public string getCurrentUser()
+            {
+                return HttpContext.Current.User.Identity.Name;
+            }
+
+            public void AgregarCliente(Cliente cliente)
+            {
+                SqlConnection conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["BD"].ConnectionString);
+                string estado = "Activo";
+                try
+                {
+                    var sql = "INSERT INTO Clientes (Nombre, Apellido, DNI, Domicilio, Localidad, IdProvincia, Telefono, IdUsuario, Estado) VALUES (@nombre, @apellido, @dni, @domicilio, @localidad, @idProvincia, @telefono, @idUsuario, @estado)";
+
+                    conexion.Open();
+                    SqlCommand cmd = new SqlCommand(sql, conexion);
+                    cmd.Parameters.Clear();
+                    string currentId = Usuario();
+                    cmd.Parameters.AddWithValue("@nombre", cliente.nombreCliente);
+                    cmd.Parameters.AddWithValue("@apellido", cliente.apellidoCliente);
+                    cmd.Parameters.AddWithValue("@dni", cliente.DNI);
+                    cmd.Parameters.AddWithValue("@domicilio", cliente.domicilio);
+                    cmd.Parameters.AddWithValue("@localidad", cliente.localidad);
+                    cmd.Parameters.AddWithValue("@idProvincia", cliente.idProvincia);
+                    cmd.Parameters.AddWithValue("@telefono", cliente.telefono);
+                    cmd.Parameters.AddWithValue("@IdUsuario", currentId);
+                    cmd.Parameters.AddWithValue("@estado", estado);
+
+                    //reemplazo el execute nonquery
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    dr.Read();
+                    conexion.Close();
+                    setRolUser(currentId, conexion);
+                }
+                catch (Exception exc)
+                {
+                    throw;
+                }
+                finally
+                {
+                    conexion.Close();
+                }
+            }
+
+            public void setRolUser(string idUser, SqlConnection conexion)
+            {
+                try
+                {
+                    var sql = "INSERT INTO AspNetUserRoles (UserId, RoleId) VALUES (@userId, @idRol)";
+                    conexion.Open();
+                    SqlCommand cmd = new SqlCommand(sql, conexion);
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@userId", idUser);
+                    cmd.Parameters.AddWithValue("@idRol", 2);
+                    cmd.ExecuteNonQuery();
+                    conexion.Close();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            public List<Provincia> ListadoProvincias()
         {
             var lista = new List<Provincia>();
 
