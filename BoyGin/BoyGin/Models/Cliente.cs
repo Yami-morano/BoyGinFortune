@@ -31,7 +31,7 @@ namespace BoyGin.Models
         [Required(ErrorMessage = "El campo localidad es obligatorio.")]
         [RegularExpression("([a-zA-Z .&'-]+)", ErrorMessage = "el campo Localidad no contiene información válida")]
         public string localidad { get; set; }
-        [Required(ErrorMessage = "Debe seleciconar la provincia.")]
+        [Required(ErrorMessage = "Debe selecionar la provincia.")]
         public int idProvincia { get; set; }
 
         [Required(ErrorMessage = "El campo telefono es obligatorio.")]

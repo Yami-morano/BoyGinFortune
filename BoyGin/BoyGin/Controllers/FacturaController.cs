@@ -18,6 +18,8 @@ namespace BoyGin.Controllers
         [Required(ErrorMessage = "El campo fecha es obligatorio.")]
         private static string fechaFin { get; set; }
         private static List<ReporteFacturacion> objetoPrueba { get; set; }
+
+        private static int incremental { get; set; }
         public ActionResult Index()
         {
             return View();
@@ -72,25 +74,27 @@ namespace BoyGin.Controllers
 
         public ActionResult FacturacionPorFecha(string cadena="", string fi="", string ff="")
         {
-            
+            ViewBag.mensaje = "";
             GestorBDFactura gestor = new GestorBDFactura();
-          
-            
             List<DTODetalleFactura> facturacion = null;
 
 
-            if (cadena != "" || fi != "" && ff != "")
-                {
+            if ( fi != "" && ff != "")
+            {
+                facturacion = gestor.BuscarFactura(cadena, DateTime.Parse(fi), DateTime.Parse(ff));       
+                fechaFin = ff;
+                fechaInicio = fi;
 
-                    facturacion = gestor.BuscarFactura(cadena, DateTime.Parse(fi), DateTime.Parse(ff));       
-                    fechaFin = ff;
-                    fechaInicio = fi;
-                }
+            }
 
-                ReporteFechas prueba = new ReporteFechas();
-           
-            return View(facturacion);
+            if(( fi == "" || ff == "") && incremental == 1)
+            {
+                ViewBag.mensaje = "Debe seleccionar el rango de fechas";
+            }
             
+            ReporteFechas prueba = new ReporteFechas();
+            incremental = 1;
+            return View(facturacion);
 
         }
 

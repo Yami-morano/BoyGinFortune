@@ -21,13 +21,17 @@
                 @Html.Label("Intervalo de fechas de factura")
                 @Html.TextBox("fi", "", new { @class = "datefield", type = "date" })
                 @Html.TextBox("ff", "", new { @class = "datefield", type = "date" })
-               
+
             </div>
             <div class=" form-group">
                 @Html.Label("Nombre de cliente")
                 @Html.TextBox("cadena", "", new { @class = "form-control" })
+                @Html.Label((string)@ViewBag.mensaje, new { style = "color:#ff0000"})
 
+
+                <label value=@Html.ViewBag.mensaje></label>
             </div>
+
             <div class="form-group">
                 <button type="submit" class="btn btn-default">Buscar</button>
                 @if (Model != null)
@@ -35,9 +39,7 @@
                     <a href="@Url.Action("ReporteBarras", "Factura", new { @reporte = ViewBag.reporte })" class="btn btn-primary">Reporte facturación</a>
                 }
             </div>
-            <div id="alo">
 
-            </div>
         </div>
     </div>
 }
