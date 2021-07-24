@@ -89,7 +89,7 @@ namespace BoyGin.Controllers
 
             if(( fi == "" || ff == "") && incremental == 1)
             {
-                ViewBag.mensaje = "Debe seleccionar el rango de fechas";
+                ViewBag.mensaje = "Debe seleccionar el rango de fechas.";
             }
             
             ReporteFechas prueba = new ReporteFechas();
